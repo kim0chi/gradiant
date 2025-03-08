@@ -1,20 +1,20 @@
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { HeroSection } from "@/components/hero-section"
-import { FeatureSection } from "@/components/feature-section"
-import { StatisticsSection } from "@/components/statistics-section"
-import { TestimonialSection } from "@/components/testimonial-section"
-import { PricingSection } from "@/components/pricing-section"
-import { CtaSection } from "@/components/cta-section"
-import { Footer } from "@/components/footer"
+import { Button } from "@/components/ui/button";
+import { HeroSection } from "@/components/hero-section";
+import { FeatureSection } from "@/components/feature-section";
+import { StatisticsSection } from "@/components/statistics-section";
+import { TestimonialSection } from "@/components/testimonial-section";
+import { PricingSection } from "@/components/pricing-section";
+import { CtaSection } from "@/components/cta-section";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container mx-auto max-w-7xl px-6 flex h-16 items-center justify-between">
           <div className="flex items-center gap-6 md:gap-10">
             <Link href="/" className="flex items-center space-x-2">
               <div className="h-6 w-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
@@ -49,16 +49,21 @@ export default function Home() {
           </div>
         </div>
       </header>
-      <main className="flex-1">
-        <HeroSection />
-        <FeatureSection />
-        <StatisticsSection />
-        <TestimonialSection />
-        <PricingSection />
-        <CtaSection />
+      <main className="flex-1 w-full flex flex-col items-center">
+        <div className="w-full max-w-7xl px-6">
+          <HeroSection />
+          <FeatureSection />
+          <StatisticsSection />
+          <TestimonialSection />
+          <PricingSection />
+          <CtaSection />
+        </div>
       </main>
-      <Footer />
+      <footer className="w-full flex justify-center border-t bg-background py-6">
+        <div className="w-full max-w-7xl px-6">
+          <Footer />
+        </div>
+      </footer>
     </div>
-  )
+  );
 }
-
