@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { HeroSection } from "@/components/hero-section";
@@ -17,8 +18,20 @@ export default function Home() {
         <div className="container mx-auto max-w-7xl px-6 flex h-16 items-center justify-between">
           <div className="flex items-center gap-6 md:gap-10">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="h-6 w-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
-              <span className="font-bold">Gradiant</span>
+              I<Image
+                src="/gradiant-logo.svg"
+                alt="Gradiant"
+                width={30}
+                height={40}
+                priority
+                />
+                <Image
+                src="/gradiant-text.svg"
+                alt="Gradiant"
+                width={120}
+                height={40}
+                priority
+                />
             </Link>
             <nav className="hidden gap-6 md:flex">
               <Link href="#features" className="text-sm font-medium transition-colors hover:text-primary">
@@ -38,7 +51,7 @@ export default function Home() {
             </Button>
             <Button
               size="sm"
-              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
+              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
               asChild
             >
               <Link href="/signup">

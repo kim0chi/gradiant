@@ -73,11 +73,11 @@ export function PricingSection() {
             <Card
               key={index}
               className={`relative ${
-                plan.popular ? "border-2 border-blue-500 shadow-lg dark:border-blue-400" : "border shadow"
+                plan.popular ? "border-2 border-cyan-500 shadow-lg dark:border-cyan-400" : "border shadow"
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-0 right-0 mx-auto w-fit rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-1 text-sm font-medium text-white">
+                <div className="absolute -top-4 left-0 right-0 mx-auto w-fit rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-1 text-sm font-medium text-white">
                   Most Popular
                 </div>
               )}
@@ -103,7 +103,7 @@ export function PricingSection() {
                 <Button
                   className={`w-full ${
                     plan.popular
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
+                      ? "bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
                       : ""
                   }`}
                   variant={plan.popular ? "default" : "outline"}

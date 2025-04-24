@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Gradiant - Simplify Grading and Classroom Management",
   description:
-    "Streamline student grading, performance tracking, and classroom management with powerful analytics and intuitive tools.",
+    "Streamline student grading, performance tracking, and CLASSROOM management with powerful analytics and intuitive tools.",
     generator: 'v0.dev'
 }
 

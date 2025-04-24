@@ -8,12 +8,12 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <Link href="/" className="flex items-center space-x-2">
-              <div className="h-6 w-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
+              <div className="h-6 w-6 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500" />
               <span className="font-bold">Gradiant</span>
             </Link>
             <p className="mt-4 text-sm text-muted-foreground">
               Simplify grading, track performance, and manage your classroom effectively with our comprehensive
-              education platform.
+              education platform. 
             </p>
           </div>
           <div>

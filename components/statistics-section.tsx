@@ -1,8 +1,23 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Bar, BarChart, Line, LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  BarChart,
+  Bar,
+} from "recharts"
 
 const gradeData = [
   { month: "Jan", average: 78, highest: 95, lowest: 62 },
@@ -27,84 +42,85 @@ export function StatisticsSection() {
     <section className="py-20 md:py-32 bg-gray-50 dark:bg-gray-900">
       <div className="container">
         <div className="mx-auto mb-16 max-w-2xl text-center">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">Data-driven insights</h2>
+          <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            Data-driven insights
+          </h2>
           <p className="text-lg text-muted-foreground">
-            Visualize student performance and attendance with powerful analytics tools.
+            Visualize student performance and attendance with powerful analytics
+            tools.
           </p>
         </div>
+
         <div className="grid gap-8 md:grid-cols-2">
-          <Card>
+          {/* ————— Grade Performance Trends ————— */}
+          <Card className="min-w-0">
             <CardHeader>
               <CardTitle>Grade Performance Trends</CardTitle>
-              <CardDescription>Average, highest, and lowest grades over time</CardDescription>
+              <CardDescription>
+                Average, highest, and lowest grades over time
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <ChartContainer
-                config={{
-                  average: {
-                    label: "Average",
-                    color: "hsl(var(--chart-1))",
-                  },
-                  highest: {
-                    label: "Highest",
-                    color: "hsl(var(--chart-2))",
-                  },
-                  lowest: {
-                    label: "Lowest",
-                    color: "hsl(var(--chart-3))",
-                  },
-                }}
-                className="h-[300px]"
-              >
+              {/* THIS wrapper guarantees Recharts can measure a real width & height */}
+              <div className="w-full h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={gradeData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" />
                     <YAxis domain={[60, 100]} />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Line type="monotone" dataKey="average" stroke="var(--color-average)" strokeWidth={2} />
-                    <Line type="monotone" dataKey="highest" stroke="var(--color-highest)" strokeWidth={2} />
-                    <Line type="monotone" dataKey="lowest" stroke="var(--color-lowest)" strokeWidth={2} />
+                    <Tooltip />
+
+                    {/* hard-coded brand colors */}
+                    <Line
+                      type="monotone"
+                      dataKey="average"
+                      stroke="#22D3EE"      /* brand-cyan */
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="highest"
+                      stroke="#EF4444"      /* brand-red */
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="lowest"
+                      stroke="#FBBF24"      /* brand-yellow */
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
                   </LineChart>
                 </ResponsiveContainer>
-              </ChartContainer>
+              </div>
             </CardContent>
           </Card>
-          <Card>
+
+          {/* ————— Attendance Statistics ————— */}
+          <Card className="min-w-0">
             <CardHeader>
               <CardTitle>Attendance Statistics</CardTitle>
-              <CardDescription>Present, absent, and late attendance records</CardDescription>
+              <CardDescription>
+                Present, absent, and late attendance records
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <ChartContainer
-                config={{
-                  present: {
-                    label: "Present",
-                    color: "hsl(var(--chart-1))",
-                  },
-                  absent: {
-                    label: "Absent",
-                    color: "hsl(var(--chart-2))",
-                  },
-                  late: {
-                    label: "Late",
-                    color: "hsl(var(--chart-3))",
-                  },
-                }}
-                className="h-[300px]"
-              >
+              <div className="w-full h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={attendanceData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar dataKey="present" fill="var(--color-present)" />
-                    <Bar dataKey="absent" fill="var(--color-absent)" />
-                    <Bar dataKey="late" fill="var(--color-late)" />
+                    <Tooltip />
+
+                    <Bar dataKey="present" fill="#22D3EE" />
+                    <Bar dataKey="absent"  fill="#EF4444" />
+                    <Bar dataKey="late"    fill="#FBBF24" />
                   </BarChart>
                 </ResponsiveContainer>
-              </ChartContainer>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -112,4 +128,3 @@ export function StatisticsSection() {
     </section>
   )
 }
-

@@ -82,7 +82,7 @@ export function FeatureSection() {
               className="border-0 bg-gradient-to-br from-white to-gray-50 shadow-md transition-all hover:shadow-lg dark:from-gray-900 dark:to-gray-800"
             >
               <CardHeader>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-500 text-white">
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 text-white">
                   <feature.icon className="h-6 w-6" />
                 </div>
                 <CardTitle>{feature.title}</CardTitle>

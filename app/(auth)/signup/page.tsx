@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { ArrowRight } from "lucide-react"
+import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,10 +16,22 @@ export const metadata: Metadata = {
 
 export default function SignupPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 p-4 dark:from-gray-900 dark:to-gray-800">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-cyan-50 to-blue-50 p-4 dark:from-gray-900 dark:to-gray-800">
       <Link href="/" className="mb-8 flex items-center space-x-2">
-        <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
-        <span className="text-xl font-bold">Gradiant</span>
+        <Image
+                  src="/gradiant-logo.svg"
+                  alt="Gradiant"
+                  width={30}
+                  height={40}
+                  priority
+                />
+                <Image
+                                src="/gradiant-text.svg"
+                                alt="Gradiant"
+                                width={150}
+                                height={40}
+                                priority
+                                />
       </Link>
 
       <Card className="w-full max-w-md">
@@ -65,7 +78,7 @@ export default function SignupPage() {
           </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
+          <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600">
             Create account
             <ArrowRight className="ml-1.5 h-4 w-4" />
           </Button>
