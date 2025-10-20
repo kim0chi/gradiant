@@ -24,7 +24,10 @@ const classFormSchema = z.object({
   grade: z.string().min(1, "Grade level is required"),
   teacher: z.string().optional(),
   room: z.string().optional(),
-  capacity: z.coerce.number().int().positive().optional(),
+  capacity: z.preprocess(
+    (val) => (val === "" || val === null || val === undefined ? undefined : Number(val)),
+    z.number().int().positive().optional()
+  ),
   description: z.string().optional(),
   status: z.enum(["active", "upcoming", "completed"]),
   startDate: z.string().optional(),
