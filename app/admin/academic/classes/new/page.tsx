@@ -61,20 +61,26 @@ export default function NewClassPage() {
     setIsSubmitting(true)
 
     try {
-      // In a real application, this would be an API call
+      // Get current user for teacher_id
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        throw new Error("User not authenticated")
+      }
+
+      // Map form values to database schema
       const { error } = await supabase
         .from("classes")
         .insert({
-          name: values.name,
-          section: values.section,
-          grade: values.grade,
-          teacher_name: values.teacher,
-          room: values.room,
-          capacity: values.capacity,
-          description: values.description,
-          status: values.status,
-          start_date: values.startDate,
-          end_date: values.endDate,
+          name: `${values.name} - ${values.section}`,
+          teacher_id: user.id,
+          subject: values.name, // Using name as subject for now
+          grade_level: parseInt(values.grade) || 1,
+          room: values.room || null,
+          description: values.description || null,
+          school_year: new Date().getFullYear().toString(),
+          period: null,
+          schedule: null,
         })
         .select()
 
