@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js"
 import { getQuickDemoUsers, generateDemoUsers } from "./demo-data-generator"
 
 // Function to load demo users into the database
-export async function loadDemoUsers(count?: number): Promise<{ success: boolean; error?: any; count?: number }> {
+export async function loadDemoUsers(count?: number): Promise<{ success: boolean; error?: unknown; count?: number }> {
   try {
     // Create Supabase client
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
@@ -98,7 +98,7 @@ export async function isDemoDataLoaded(): Promise<boolean> {
 }
 
 // Function to clear demo data
-export async function clearDemoData(): Promise<{ success: boolean; error?: any }> {
+export async function clearDemoData(): Promise<{ success: boolean; error?: unknown }> {
   try {
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 

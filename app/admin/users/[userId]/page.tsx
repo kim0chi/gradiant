@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -30,8 +30,9 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 
-export default function UserDetailsPage({ params }: { params: { userId: string } }) {
-  const [user, setUser] = useState<any>(null)
+export default function UserDetailsPage({ params }: { params: Promise<{ userId: string }> }) {
+  const { userId } = use(params)
+  const [user, setUser] = useState<unknown>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -41,7 +42,7 @@ export default function UserDetailsPage({ params }: { params: { userId: string }
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const { data, error: fetchError } = await getUserById(params.userId)
+        const { data, error: fetchError } = await getUserById(userId)
 
         if (fetchError) {
           setError(fetchError.message)
@@ -59,9 +60,9 @@ export default function UserDetailsPage({ params }: { params: { userId: string }
         }
 
         setUser(data)
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Error fetching user details:", err)
-        setError(err.message || "An error occurred")
+        setError(err instanceof Error ? err.message : "An error occurred")
         toast({
           title: "Error",
           description: "Failed to load user details",
@@ -73,11 +74,11 @@ export default function UserDetailsPage({ params }: { params: { userId: string }
     }
 
     fetchUserDetails()
-  }, [params.userId, toast])
+  }, [userId, toast])
 
   const handleDelete = async () => {
     try {
-      const { success, error } = await deleteUser(params.userId)
+      const { success, error } = await deleteUser(userId)
 
       if (error) throw error
 
@@ -88,10 +89,10 @@ export default function UserDetailsPage({ params }: { params: { userId: string }
         })
         router.push("/admin/users")
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error deleting user",
-        description: error.message || "There was an error deleting the user",
+        description: error instanceof Error ? error.message : "There was an error deleting the user",
         variant: "destructive",
       })
     } finally {
@@ -113,10 +114,10 @@ export default function UserDetailsPage({ params }: { params: { userId: string }
           description: `A password reset email has been sent to ${user.email}`,
         })
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error sending password reset",
-        description: error.message || "There was an error sending the password reset email",
+        description: error instanceof Error ? error.message : "There was an error sending the password reset email",
         variant: "destructive",
       })
     }
@@ -218,7 +219,7 @@ export default function UserDetailsPage({ params }: { params: { userId: string }
               <Mail className="mr-2 h-4 w-4" />
               Send Password Reset
             </Button>
-            <Button variant="outline" onClick={() => router.push(`/admin/users/edit/${params.userId}`)}>
+            <Button variant="outline" onClick={() => router.push(`/admin/users/edit/${userId}`)}>
               <Pencil className="mr-2 h-4 w-4" />
               Edit User
             </Button>

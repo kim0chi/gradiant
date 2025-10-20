@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, use } from "react"
 import { Save } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -8,7 +8,8 @@ import { CategoryWeightsForm } from "../components/category-weights-form"
 import { PeriodSettings } from "../components/period-settings"
 import { GradeCalculationSettings } from "../components/grade-calculation-settings"
 
-export default function SettingsPage({ params }: { params: { classId: string } }) {
+export default function SettingsPage({ params }: { params: Promise<{ classId: string }> }) {
+  const { classId } = use(params)
   const [isSaving, setIsSaving] = useState(false)
 
   const handleSaveAll = async () => {
@@ -43,15 +44,15 @@ export default function SettingsPage({ params }: { params: { classId: string } }
         </TabsList>
 
         <TabsContent value="categories" className="pt-4">
-          <CategoryWeightsForm classId={params.classId} />
+          <CategoryWeightsForm classId={classId} />
         </TabsContent>
 
         <TabsContent value="periods" className="pt-4">
-          <PeriodSettings classId={params.classId} />
+          <PeriodSettings classId={classId} />
         </TabsContent>
 
         <TabsContent value="calculation" className="pt-4">
-          <GradeCalculationSettings classId={params.classId} />
+          <GradeCalculationSettings classId={classId} />
         </TabsContent>
 
         <TabsContent value="policies" className="pt-4">

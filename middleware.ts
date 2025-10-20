@@ -23,14 +23,6 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/_next") ||
     request.nextUrl.pathname.startsWith("/api/auth")
 
-  // Check for mock auth mode
-  const mockAuthEnabled = request.cookies.get("MOCK_AUTH_ENABLED")?.value === "true"
-
-  // If mock auth is enabled, allow access to all routes
-  if (mockAuthEnabled) {
-    return NextResponse.next()
-  }
-
   // If no session and trying to access protected routes
   if (!session && !isPublicRoute) {
     // Determine which login page to redirect to based on the requested path

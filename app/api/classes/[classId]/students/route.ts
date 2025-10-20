@@ -26,8 +26,8 @@ const mockStudents = [
 /**
  * GET handler for retrieving students for a specific class
  */
-export async function GET(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId: _classId } = await params
 
   try {
     // In a real app, fetch students from database
@@ -50,8 +50,8 @@ export async function GET(request: NextRequest, { params }: { params: { classId:
 /**
  * POST handler for adding a student to a class
  */
-export async function POST(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function POST(request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId: _classId } = await params
 
   try {
     // Parse the request body

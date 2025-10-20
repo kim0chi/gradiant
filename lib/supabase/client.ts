@@ -1,10 +1,10 @@
 "use client"
 
-import { createBrowserClient } from "@supabase/ssr"
+import { createBrowserClient as createSupabaseBrowserClient } from "@supabase/ssr"
 import type { Database } from "@/types/supabase"
 
 // Create a singleton instance of the Supabase client to prevent multiple instances
-let supabaseInstance: ReturnType<typeof createBrowserClient<Database>> | null = null
+let supabaseInstance: ReturnType<typeof createSupabaseBrowserClient<Database>> | null = null
 
 export const createClient = () => {
   if (!supabaseInstance) {
@@ -18,7 +18,7 @@ export const createClient = () => {
 
     console.log("Initializing Supabase client with URL:", supabaseUrl)
 
-    supabaseInstance = createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
+    supabaseInstance = createSupabaseBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
   }
 
   return supabaseInstance
@@ -26,6 +26,9 @@ export const createClient = () => {
 
 // Export the Supabase client for direct usage
 export const supabase = createClient()
+
+// Export createBrowserClient as an alias for createClient for backwards compatibility
+export { createClient as createBrowserClient }
 
 // Helper function to get the current user
 export async function getCurrentUser() {
@@ -45,7 +48,12 @@ export async function getCurrentUser() {
     .single()
 
   if (profileError || !profile) {
-    console.error("Error getting user profile:", profileError)
+    console.warn("Profile not found in database, using auth user data:", {
+      code: profileError?.code,
+      message: profileError?.message,
+      details: profileError?.details,
+      hint: profileError?.hint,
+    })
     // Return basic user info even if profile fetch fails
     return {
       id: data.user.id,

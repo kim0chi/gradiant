@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import { PlusCircle, Search, Filter, Download, MoreHorizontal, Pencil, Trash2, Users, BookOpen } from 'lucide-react'
 import { Button } from "@/components/ui/button"
@@ -34,8 +33,6 @@ type ClassItem = {
 }
 
 export default function ClassesPage() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
   const { toast } = useToast()
 
   const [classes, setClasses] = useState<ClassItem[]>([])
@@ -56,15 +53,15 @@ export default function ClassesPage() {
 
         // Transform the data
         const transformedData: ClassItem[] =
-          data?.map((item: any) => ({
-            id: item.id,
-            name: item.name,
-            section: item.section || "Section A",
-            grade: item.grade || "Grade " + Math.floor(Math.random() * 12 + 1),
-            teacher: item.teacher_name || "Unassigned",
-            students: item.student_count || Math.floor(Math.random() * 30) + 10,
-            status: item.status || "active",
-            createdAt: item.created_at || new Date().toISOString(),
+          data?.map((item: Record<string, unknown>) => ({
+            id: item.id as string,
+            name: item.name as string,
+            section: (item.section as string) || "Section A",
+            grade: (item.grade as string) || "Grade " + Math.floor(Math.random() * 12 + 1),
+            teacher: (item.teacher_name as string) || "Unassigned",
+            students: (item.student_count as number) || Math.floor(Math.random() * 30) + 10,
+            status: (item.status as ClassItem["status"]) || "active",
+            createdAt: (item.created_at as string) || new Date().toISOString(),
           })) || generateMockClasses()
 
         setClasses(transformedData)

@@ -67,7 +67,7 @@ export default function CalendarPage() {
       try {
         setEvents(mockEvents)
         setIsLoading(false)
-      } catch (err) {
+      } catch (_err) {
         setError("Failed to load calendar events. Please try again later.")
         setIsLoading(false)
       }

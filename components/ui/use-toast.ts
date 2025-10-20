@@ -25,6 +25,8 @@ const actionTypes = {
   REMOVE_TOAST: "REMOVE_TOAST",
 } as const
 
+// ActionType is used in the Action type definition below
+
 let count = 0
 
 function genId() {

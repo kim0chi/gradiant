@@ -188,10 +188,10 @@ export default function AdminUsersPage() {
           description: "User has been created successfully",
         })
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error creating user",
-        description: error.message || "There was an error creating the user",
+        description: error instanceof Error ? error.message : "There was an error creating the user",
         variant: "destructive",
       })
     } finally {
@@ -228,10 +228,10 @@ export default function AdminUsersPage() {
           description: "User has been updated successfully",
         })
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error updating user",
-        description: error.message || "There was an error updating the user",
+        description: error instanceof Error ? error.message : "There was an error updating the user",
         variant: "destructive",
       })
     } finally {
@@ -257,10 +257,10 @@ export default function AdminUsersPage() {
           description: `${email} has been deleted successfully`,
         })
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error deleting user",
-        description: error.message || "There was an error deleting the user",
+        description: error instanceof Error ? error.message : "There was an error deleting the user",
         variant: "destructive",
       })
     }
@@ -279,10 +279,10 @@ export default function AdminUsersPage() {
           description: `A password reset email has been sent to ${email}`,
         })
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error sending password reset",
-        description: error.message || "There was an error sending the password reset email",
+        description: error instanceof Error ? error.message : "There was an error sending the password reset email",
         variant: "destructive",
       })
     }

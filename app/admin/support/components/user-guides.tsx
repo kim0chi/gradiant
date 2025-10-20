@@ -18,7 +18,7 @@ import {
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Book, FileText, Video, Plus, Edit, Trash2, Eye, Search } from "lucide-react"
+import { Plus, Edit, Trash2, Eye, Search } from "lucide-react"
 
 // Mock data for demonstration
 const guidesData = [
@@ -155,17 +155,6 @@ export function UserGuides({ searchQuery = "" }) {
 
   const handleDeleteGuide = (guideId) => {
     setGuides(guides.filter((guide) => guide.id !== guideId))
-  }
-
-  const getGuideIcon = (type) => {
-    switch (type) {
-      case "document":
-        return <FileText className="h-10 w-10 text-blue-500" />
-      case "video":
-        return <Video className="h-10 w-10 text-red-500" />
-      default:
-        return <Book className="h-10 w-10 text-green-500" />
-    }
   }
 
   return (

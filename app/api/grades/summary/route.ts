@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
-import { isDebugMode, getMockStudentsData } from "@/lib/mockAuth"
+import { getMockStudentsData } from "@/lib/mockAuth"
 
-// Helper function to convert numeric grade to letter grade
-function getLetterGrade(score: number): string {
+// Helper function to convert numeric grade to letter grade (currently unused but kept for future use)
+function _getLetterGrade(score: number): string {
   if (score >= 97) return "A+"
   if (score >= 93) return "A"
   if (score >= 90) return "A-"
@@ -25,11 +25,6 @@ export async function GET(request: Request) {
 
   if (!classId) {
     return NextResponse.json({ error: "Class ID is required" }, { status: 400 })
-  }
-
-  // Use mock data in debug mode
-  if (isDebugMode()) {
-    return NextResponse.json(generateMockGradeSummary())
   }
 
   try {

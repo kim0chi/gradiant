@@ -72,23 +72,6 @@ export function GradingOverview() {
     return { overall, bySubject }
   }
 
-  // Get color for grade bars
-  const getGradeColor = (grade: string) => {
-    switch (grade) {
-      case "A":
-        return "#22c55e" // green-500
-      case "B":
-        return "#3b82f6" // blue-500
-      case "C":
-        return "#f59e0b" // amber-500
-      case "D":
-        return "#f97316" // orange-500
-      case "F":
-        return "#ef4444" // red-500
-      default:
-        return "#6b7280" // gray-500
-    }
-  }
 
   if (loading) {
     return (

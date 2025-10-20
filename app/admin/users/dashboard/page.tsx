@@ -31,11 +31,11 @@ export default function UserDashboardPage() {
         // Refresh the page to show the new user
         router.refresh()
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error creating test user:", error)
       toast({
         title: "Error creating test user",
-        description: error.message || "An unknown error occurred",
+        description: error instanceof Error ? error.message : "An unknown error occurred",
         variant: "destructive",
       })
     } finally {

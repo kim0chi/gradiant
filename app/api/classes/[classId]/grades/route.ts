@@ -63,8 +63,8 @@ const gradesRequestSchema = z.object({
  * GET handler for retrieving grades for a specific class
  * Supports filtering by periodId query parameter
  */
-export async function GET(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function GET(request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId: _classId } = await params
   const url = new URL(request.url)
   const periodId = url.searchParams.get("periodId")
   const studentId = url.searchParams.get("studentId")
@@ -116,8 +116,8 @@ export async function GET(request: NextRequest, { params }: { params: { classId:
 /**
  * POST handler for saving multiple grades
  */
-export async function POST(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function POST(request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId: _classId } = await params
 
   try {
     // Parse the request body

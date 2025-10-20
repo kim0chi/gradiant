@@ -97,11 +97,11 @@ export function GradeCalculationSettings() {
     })
   }
 
-  const handleUpdateCategory = (id: string, field: keyof CategoryWeight, value: any) => {
+  const handleUpdateCategory = (id: string, field: keyof CategoryWeight, value: string | number) => {
     setConfig({
       ...config,
       categories: config.categories.map((c) =>
-        c.id === id ? { ...c, [field]: field === "weight" ? Number.parseInt(value) || 0 : value } : c,
+        c.id === id ? { ...c, [field]: field === "weight" ? Number.parseInt(String(value)) || 0 : value } : c,
       ),
     })
   }

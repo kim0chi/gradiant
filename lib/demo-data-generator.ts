@@ -73,7 +73,7 @@ const generateSchoolEmail = (name: string, role: UserRole, domain = "gradiant.ed
 }
 
 // Generate a single demo user
-export const generateDemoUser = (role: UserRole, index: number): DemoUser => {
+export const generateDemoUser = (role: UserRole, _index: number): DemoUser => {
   const gender = faker.person.sex() as "male" | "female"
   const firstName = faker.person.firstName(gender)
   const lastName = faker.person.lastName()

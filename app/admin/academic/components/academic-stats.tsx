@@ -50,7 +50,7 @@ export function AcademicStats() {
         // For demo purposes, we'll simulate the data loading
 
         // Fetch class count
-        const { count: classCount, error: classError } = await supabase
+        const { count: classCount } = await supabase
           .from("classes")
           .select("*", { count: "exact", head: true })
 
@@ -58,7 +58,7 @@ export function AcademicStats() {
         const subjectCount = 24 // This would be a real API call in production
 
         // Fetch teacher count
-        const { count: teacherCount, error: teacherError } = await supabase
+        const { count: teacherCount } = await supabase
           .from("profiles")
           .select("*", { count: "exact", head: true })
           .eq("role", "teacher")

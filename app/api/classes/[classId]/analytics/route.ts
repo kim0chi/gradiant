@@ -41,8 +41,8 @@ const mockAnalytics = {
 /**
  * GET handler for retrieving analytics data for a specific class
  */
-export async function GET(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId: _classId } = await params
 
   try {
     // In a real app, compute analytics from database

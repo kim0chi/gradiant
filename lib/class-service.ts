@@ -1,12 +1,7 @@
 import { supabase } from "./supabase/client"
-import { isDebugMode } from "./mockAuth"
 
 // Function to get students in a class
 export async function getClassStudents(classId: string) {
-  if (isDebugMode()) {
-    return generateMockStudents()
-  }
-
   try {
     // In a real implementation, we would fetch data from Supabase
     const { data, error } = await supabase
@@ -35,10 +30,6 @@ export async function getClassStudents(classId: string) {
 
 // Function to get tasks for a class
 export async function getClassTasks(classId: string) {
-  if (isDebugMode()) {
-    return generateMockTasks()
-  }
-
   try {
     // In a real implementation, we would fetch data from Supabase
     const { data, error } = await supabase

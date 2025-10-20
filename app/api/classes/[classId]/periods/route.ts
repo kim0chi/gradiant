@@ -1,9 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { PeriodSchema } from "@/types/gradebook-schemas"
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import type { Database } from "@/types/supabase"
+import { createServerSupabaseClient } from "@/lib/supabase/server"
 
 // Define the schema for the request body
 const periodsRequestSchema = z.object({
@@ -27,8 +25,8 @@ const mockPeriods = [
 /**
  * GET handler for retrieving periods for a specific class
  */
-export async function GET(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId: _classId } = await params
 
   try {
     // In a real app, fetch periods from database
@@ -45,8 +43,8 @@ export async function GET(request: NextRequest, { params }: { params: { classId:
 /**
  * PATCH handler for updating periods for a specific class
  */
-export async function PATCH(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId: _classId } = await params
 
   try {
     // Parse the request body
@@ -88,9 +86,9 @@ export async function PATCH(request: NextRequest, { params }: { params: { classI
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+export async function POST(request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId } = await params
+  const supabase = await createServerSupabaseClient()
 
   // Check if user is authenticated
   const {

@@ -80,7 +80,6 @@ const mockClasses = [
 
 export default function AnalyticsPage() {
   const [loading, setLoading] = useState(true)
-  const [userData, setUserData] = useState<any>(null)
   const [selectedClass, setSelectedClass] = useState<string>("")
   const router = useRouter()
 
@@ -99,8 +98,6 @@ export default function AnalyticsPage() {
           router.push("/student")
           return
         }
-
-        setUserData(user)
 
         // Select first class by default if available
         if (mockClasses.length > 0) {

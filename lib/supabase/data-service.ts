@@ -1,6 +1,5 @@
 import { supabase } from "./client"
 import {
-  isDebugMode,
   getMockClassesData,
   getMockStudentsData,
   getMockTasksData,
@@ -10,9 +9,6 @@ import {
 
 // Classes
 export async function getClasses() {
-  if (isDebugMode()) {
-    return getMockClassesData()
-  }
 
   const { data, error } = await supabase.from("classes").select("*").order("name")
   if (error) throw error
@@ -20,9 +16,6 @@ export async function getClasses() {
 }
 
 export async function getClassById(id: string) {
-  if (isDebugMode()) {
-    return getMockClassesData().find((c) => c.id === id) || null
-  }
 
   const { data, error } = await supabase.from("classes").select("*").eq("id", id).single()
   if (error) throw error
@@ -31,9 +24,6 @@ export async function getClassById(id: string) {
 
 // Students
 export async function getStudentsInClass(classId: string) {
-  if (isDebugMode()) {
-    return getMockStudentsData()
-  }
 
   try {
     const { data, error } = await supabase.from("class_enrollments").select("students(*)").eq("class_id", classId)
@@ -58,9 +48,6 @@ export async function getStudentsInClass(classId: string) {
 
 // Tasks
 export async function getTasksForClass(classId: string) {
-  if (isDebugMode()) {
-    return getMockTasksData()
-  }
 
   try {
     const { data, error } = await supabase.from("tasks").select("*").eq("class_id", classId).order("due_date")
@@ -85,9 +72,6 @@ export async function getTasksForClass(classId: string) {
 
 // Grades
 export async function getGradesForClass(classId: string) {
-  if (isDebugMode()) {
-    return getMockGradesData()
-  }
 
   const { data, error } = await supabase.from("grades").select("*").eq("class_id", classId)
 
@@ -95,24 +79,14 @@ export async function getGradesForClass(classId: string) {
   return data
 }
 
-export async function updateGrade(id: string, updates: any) {
-  if (isDebugMode()) {
-    console.log("Mock update grade:", id, updates)
-    return { id, ...updates }
-  }
-
-  const { data, error } = await supabase.from("grades").update(updates).eq("id", id).select().single()
+export async function updateGrade(id: string, updates: Record<string, unknown>) {
+  const { data, error} = await supabase.from("grades").update(updates).eq("id", id).select().single()
 
   if (error) throw error
   return data
 }
 
-export async function createGrade(grade: any) {
-  if (isDebugMode()) {
-    console.log("Mock create grade:", grade)
-    return { id: "new-grade-id", ...grade }
-  }
-
+export async function createGrade(grade: Record<string, unknown>) {
   const { data, error } = await supabase.from("grades").insert(grade).select().single()
 
   if (error) throw error
@@ -121,9 +95,6 @@ export async function createGrade(grade: any) {
 
 // Attendance
 export async function getAttendanceForClass(classId: string, date: string) {
-  if (isDebugMode()) {
-    return getMockAttendanceData()
-  }
 
   const { data, error } = await supabase.from("attendance").select("*").eq("class_id", classId).eq("date", date)
 
@@ -131,19 +102,14 @@ export async function getAttendanceForClass(classId: string, date: string) {
   return data
 }
 
-export async function recordAttendance(attendance: any) {
-  if (isDebugMode()) {
-    console.log("Mock record attendance:", attendance)
-    return { id: "new-attendance-id", ...attendance }
-  }
-
+export async function recordAttendance(attendance: Record<string, unknown>) {
   // Check if record already exists
   const { data: existing } = await supabase
     .from("attendance")
     .select("id")
-    .eq("student_id", attendance.student_id)
-    .eq("class_id", attendance.class_id)
-    .eq("date", attendance.date)
+    .eq("student_id", attendance.student_id as string)
+    .eq("class_id", attendance.class_id as string)
+    .eq("date", attendance.date as string)
     .single()
 
   if (existing) {
@@ -168,15 +134,6 @@ export async function recordAttendance(attendance: any) {
 
 // Users
 export async function getUserProfile(userId: string) {
-  if (isDebugMode()) {
-    return {
-      id: userId,
-      full_name: "Mock User",
-      email: "mock@example.com",
-      role: "teacher",
-    }
-  }
-
   const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single()
 
   if (error) throw error

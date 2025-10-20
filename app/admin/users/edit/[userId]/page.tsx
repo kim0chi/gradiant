@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { useRouter } from "next/navigation"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
@@ -31,7 +31,8 @@ const userSchema = z.object({
   }),
 })
 
-export default function EditUserPage({ params }: { params: { userId: string } }) {
+export default function EditUserPage({ params }: { params: Promise<{ userId: string }> }) {
+  const { userId } = use(params)
   const [isLoading, setIsLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -52,7 +53,7 @@ export default function EditUserPage({ params }: { params: { userId: string } })
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const { data, error: fetchError } = await getUserById(params.userId)
+        const { data, error: fetchError } = await getUserById(userId)
 
         if (fetchError) {
           setError(fetchError.message)
@@ -74,9 +75,9 @@ export default function EditUserPage({ params }: { params: { userId: string } })
           email: data.email,
           role: data.role,
         })
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Error fetching user details:", err)
-        setError(err.message || "An error occurred")
+        setError(err instanceof Error ? err.message : "An error occurred")
         toast({
           title: "Error",
           description: "Failed to load user details",
@@ -88,14 +89,14 @@ export default function EditUserPage({ params }: { params: { userId: string } })
     }
 
     fetchUserDetails()
-  }, [params.userId, toast, form])
+  }, [userId, toast, form])
 
   // Handle form submission
   const onSubmit = async (values: z.infer<typeof userSchema>) => {
     setIsSubmitting(true)
 
     try {
-      const { data, error } = await updateUser(params.userId, {
+      const { error } = await updateUser(userId, {
         fullName: values.fullName,
         email: values.email,
         role: values.role as "admin" | "teacher" | "student",
@@ -109,11 +110,11 @@ export default function EditUserPage({ params }: { params: { userId: string } })
       })
 
       // Redirect to user details page
-      router.push(`/admin/users/${params.userId}`)
-    } catch (error: any) {
+      router.push(`/admin/users/${userId}`)
+    } catch (error: unknown) {
       toast({
         title: "Error updating user",
-        description: error.message || "There was an error updating the user",
+        description: error instanceof Error ? error.message : "There was an error updating the user",
         variant: "destructive",
       })
     } finally {
@@ -182,7 +183,7 @@ export default function EditUserPage({ params }: { params: { userId: string } })
         </Breadcrumb>
 
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" onClick={() => router.push(`/admin/users/${params.userId}`)}>
+          <Button variant="outline" size="icon" onClick={() => router.push(`/admin/users/${userId}`)}>
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <h1 className="text-3xl font-bold">Edit User</h1>
@@ -192,7 +193,7 @@ export default function EditUserPage({ params }: { params: { userId: string } })
           <CardHeader>
             <CardTitle>Edit User Information</CardTitle>
             <CardDescription>
-              Update the user's information. Changes to the email will require the user to verify their new email
+              Update the user&apos;s information. Changes to the email will require the user to verify their new email
               address.
             </CardDescription>
           </CardHeader>
@@ -208,7 +209,7 @@ export default function EditUserPage({ params }: { params: { userId: string } })
                       <FormControl>
                         <Input placeholder="John Doe" {...field} />
                       </FormControl>
-                      <FormDescription>Enter the user's full name as it will appear in the system.</FormDescription>
+                      <FormDescription>Enter the user&apos;s full name as it will appear in the system.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -256,7 +257,7 @@ export default function EditUserPage({ params }: { params: { userId: string } })
                 />
 
                 <CardFooter className="flex justify-between px-0">
-                  <Button type="button" variant="outline" onClick={() => router.push(`/admin/users/${params.userId}`)}>
+                  <Button type="button" variant="outline" onClick={() => router.push(`/admin/users/${userId}`)}>
                     Cancel
                   </Button>
                   <Button type="submit" disabled={isSubmitting}>

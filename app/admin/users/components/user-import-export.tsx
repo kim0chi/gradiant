@@ -148,8 +148,9 @@ export function UserImportExport() {
               created_at: new Date().toISOString(),
             })
           }
-        } catch (error: any) {
-          errors.push(`User ${users[i].email}: ${error.message}`)
+        } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : String(error)
+          errors.push(`User ${users[i].email}: ${errorMessage}`)
         }
 
         // Update progress
@@ -176,17 +177,18 @@ export function UserImportExport() {
           variant: "destructive",
         })
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "There was an error importing users"
       toast({
         title: "Import failed",
-        description: error.message || "There was an error importing users",
+        description: errorMessage,
         variant: "destructive",
       })
 
       setImportResults({
         success: 0,
         failed: 0,
-        errors: [error.message],
+        errors: [errorMessage],
       })
     } finally {
       setIsImporting(false)
@@ -247,10 +249,11 @@ export function UserImportExport() {
         title: "Export successful",
         description: `${data.length} users exported to ${format.toUpperCase()} format.`,
       })
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "There was an error exporting users"
       toast({
         title: "Export failed",
-        description: error.message || "There was an error exporting users",
+        description: errorMessage,
         variant: "destructive",
       })
     }

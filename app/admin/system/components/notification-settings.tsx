@@ -155,7 +155,7 @@ export function NotificationSettings() {
                   <FormControl>
                     <Input type="email" placeholder="notifications@example.com" {...field} />
                   </FormControl>
-                  <FormDescription>The email address that will appear in the "From" field.</FormDescription>
+                  <FormDescription>The email address that will appear in the &quot;From&quot; field.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

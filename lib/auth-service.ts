@@ -28,9 +28,10 @@ export async function signInWithEmail({ email, password }: SignInCredentials) {
     }
 
     return { user: data.user, session: data.session, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error signing in:", error)
-    return { user: null, session: null, error: error.message || "Failed to sign in" }
+    const message = error instanceof Error ? error.message : "Failed to sign in"
+    return { user: null, session: null, error: message }
   }
 }
 
@@ -73,9 +74,10 @@ export async function signUpWithEmail({ email, password, fullName, role = "stude
     }
 
     return { user: data.user, session: data.session, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error signing up:", error)
-    return { user: null, session: null, error: error.message || "Failed to sign up" }
+    const message = error instanceof Error ? error.message : "Failed to sign up"
+    return { user: null, session: null, error: message }
   }
 }
 
@@ -94,9 +96,10 @@ export async function resetPassword(email: string) {
     }
 
     return { success: true, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error resetting password:", error)
-    return { success: false, error: error.message || "Failed to reset password" }
+    const message = error instanceof Error ? error.message : "Failed to reset password"
+    return { success: false, error: message }
   }
 }
 
@@ -130,9 +133,10 @@ export async function updatePassword(password: string) {
     }
 
     return { success: true, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error updating password:", error)
-    return { success: false, error: error.message || "Failed to update password" }
+    const message = error instanceof Error ? error.message : "Failed to update password"
+    return { success: false, error: message }
   }
 }
 
@@ -149,9 +153,10 @@ export async function signOut() {
     }
 
     return { success: true, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error signing out:", error)
-    return { success: false, error: error.message || "Failed to sign out" }
+    const message = error instanceof Error ? error.message : "Failed to sign out"
+    return { success: false, error: message }
   }
 }
 
@@ -168,8 +173,9 @@ export async function getSession() {
     }
 
     return { session: data.session, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error getting session:", error)
-    return { session: null, error: error.message || "Failed to get session" }
+    const message = error instanceof Error ? error.message : "Failed to get session"
+    return { session: null, error: message }
   }
 }

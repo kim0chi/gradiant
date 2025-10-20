@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, BookOpen, Calendar, CheckCircle, Users } from "lucide-react"
-import { getMockClassesData, getMockStudentsData, getMockTasksData, isDebugMode } from "@/lib/mockAuth"
+import { getMockClassesData, getMockStudentsData, getMockTasksData } from "@/lib/mockAuth"
 import { createBrowserClient } from "@/lib/supabase/client"
 
 export default function TeacherDashboard() {
@@ -20,16 +20,6 @@ export default function TeacherDashboard() {
     const fetchData = async () => {
       try {
         setLoading(true)
-
-        // Check if we're in debug/mock mode
-        if (isDebugMode()) {
-          console.log("Using mock data for teacher dashboard")
-          setClasses(getMockClassesData())
-          setStudents(getMockStudentsData())
-          setTasks(getMockTasksData())
-          setLoading(false)
-          return
-        }
 
         // Use real Supabase data
         const supabase = createBrowserClient()

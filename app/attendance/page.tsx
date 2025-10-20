@@ -70,7 +70,7 @@ const mockClasses: Class[] = [
 
 export default function AttendancePage() {
   const [loading, setLoading] = useState(true)
-  const [userData, setUserData] = useState<any>(null)
+  const [_userData, setUserData] = useState<unknown>(null)
   const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [selectedClass, setSelectedClass] = useState<string>("")
   const [attendance, setAttendance] = useState<Record<string, AttendanceRecord>>({})

@@ -120,7 +120,6 @@ export function UserActivityReport() {
       const avgSessionTime = Math.round(totalSessionTime / totalDays)
 
       // Calculate percent changes (compare to previous period)
-      const previousPeriodDays = totalDays
       const loginChangePercent = Math.round(Math.random() * 20 - 5) // Between -5% and +15%
       const userChangePercent = Math.round(Math.random() * 20) // Between 0% and +20%
 

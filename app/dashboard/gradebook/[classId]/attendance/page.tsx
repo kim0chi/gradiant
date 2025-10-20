@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, use } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AttendanceTracker } from "./attendance-tracker"
 import { AttendanceAnalytics } from "./attendance-analytics"
 
-export default function AttendancePage({ params }: { params: { classId: string } }) {
+export default function AttendancePage({ params }: { params: Promise<{ classId: string }> }) {
+  const { classId } = use(params)
   const [searchQuery, setSearchQuery] = useState("")
 
   return (
@@ -19,11 +20,11 @@ export default function AttendancePage({ params }: { params: { classId: string }
         </TabsList>
 
         <TabsContent value="tracking" className="mt-6">
-          <AttendanceTracker classId={params.classId} />
+          <AttendanceTracker classId={classId} />
         </TabsContent>
 
         <TabsContent value="analytics" className="mt-6">
-          <AttendanceAnalytics classId={params.classId} />
+          <AttendanceAnalytics classId={classId} />
         </TabsContent>
       </Tabs>
     </div>

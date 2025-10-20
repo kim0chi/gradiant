@@ -1,10 +1,10 @@
-import { Suspense } from "react"
+import { Suspense, use } from "react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { GradingByPeriod } from "../components/grading-by-period"
 
-export default function GradingPage({ params }: { params: { classId: string } }) {
-  const { classId } = params
+export default function GradingPage({ params }: { params: Promise<{ classId: string }> }) {
+  const { classId } = use(params)
 
   return (
     <div className="space-y-6">

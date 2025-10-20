@@ -138,7 +138,7 @@ export function GradeScalesConfig() {
     })
   }
 
-  const handleGradeChange = (gradeId: string, field: keyof GradeItem, value: any) => {
+  const handleGradeChange = (gradeId: string, field: keyof GradeItem, value: string | number | null) => {
     if (!editedGradeScale) return
 
     setEditedGradeScale({
@@ -173,7 +173,10 @@ export function GradeScalesConfig() {
               value={newScaleName}
               onChange={(e) => setNewScaleName(e.target.value)}
             />
-            <Select value={newScaleType} onValueChange={(value) => setNewScaleType(value as any)}>
+            <Select
+              value={newScaleType}
+              onValueChange={(value) => setNewScaleType(value as "Letter" | "Numeric" | "Percentage" | "Custom")}
+            >
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
@@ -230,7 +233,7 @@ export function GradeScalesConfig() {
                 </div>
 
                 <div className="space-y-4 border rounded-md p-4">
-                  {editedGradeScale.grades.map((grade, index) => (
+                  {editedGradeScale.grades.map((grade) => (
                     <div
                       key={grade.id}
                       className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center pb-4 border-b last:border-0 last:pb-0"

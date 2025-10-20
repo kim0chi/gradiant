@@ -1,12 +1,7 @@
 import { supabase } from "./supabase/client"
-import { isDebugMode } from "./mockAuth"
 
 // Function to get student performance data
 export async function getStudentPerformanceData(studentId: string) {
-  if (isDebugMode()) {
-    return generateMockPerformanceData(studentId)
-  }
-
   try {
     // In a real implementation, we would fetch data from Supabase
     // Fetch grades
@@ -30,14 +25,17 @@ export async function getStudentPerformanceData(studentId: string) {
     // Process the data and return
     return processStudentData(studentId, grades, tasks, attendance)
   } catch (error) {
-    console.error("Error fetching student performance data:", error)
+    console.error("Error fetching student performance data:")
+    console.error("Error object:", JSON.stringify(error, null, 2))
+    console.error("Error keys:", error && typeof error === 'object' ? Object.keys(error) : 'N/A')
+    console.error("Error toString:", String(error))
     // Fall back to mock data if there's an error
     return generateMockPerformanceData(studentId)
   }
 }
 
 // Helper function to process student data
-function processStudentData(studentId: string, grades: any[], tasks: any[], attendance: any[]) {
+function processStudentData(studentId: string, _grades: unknown[], _tasks: unknown[], _attendance: unknown[]) {
   // This would be a real implementation that processes the data
   // For now, we'll return mock data
   return generateMockPerformanceData(studentId)

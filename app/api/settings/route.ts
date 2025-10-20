@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 
 // This is a mock implementation for demo purposes
 // In a real app, you would use Supabase to store settings
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // In a real app, you would fetch settings from Supabase
     // For now, we'll return default settings

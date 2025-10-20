@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import { PlusCircle, Search, Filter, Download, MoreHorizontal, Pencil, Trash2, BookOpen, GraduationCap } from 'lucide-react'
 import { Button } from "@/components/ui/button"
@@ -33,8 +32,6 @@ type SubjectItem = {
 }
 
 export default function SubjectsPage() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
   const { toast } = useToast()
 
   const [subjects, setSubjects] = useState<SubjectItem[]>([])

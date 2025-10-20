@@ -3,12 +3,12 @@ import { createServerClient } from "@/lib/supabase/server"
 export interface UserSettings {
   id: string
   user_id: string
-  settings_data: Record<string, any>
+  settings_data: Record<string, unknown>
   created_at: string
   updated_at: string
 }
 
-export async function getUserSettings(userId: string): Promise<Record<string, any> | null> {
+export async function getUserSettings(userId: string): Promise<Record<string, unknown> | null> {
   const supabase = createServerClient()
 
   const { data, error } = await supabase.from("user_settings").select("settings_data").eq("user_id", userId).single()
@@ -21,7 +21,7 @@ export async function getUserSettings(userId: string): Promise<Record<string, an
   return data?.settings_data || null
 }
 
-export async function saveUserSettings(userId: string, settings: Record<string, any>): Promise<boolean> {
+export async function saveUserSettings(userId: string, settings: Record<string, unknown>): Promise<boolean> {
   const supabase = createServerClient()
 
   // Check if settings exist for this user

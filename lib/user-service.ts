@@ -26,7 +26,10 @@ export async function getUsers(role?: UserRole) {
     const { data, error } = await query
 
     if (error) {
-      console.error("Supabase error fetching users:", error)
+      console.error("Supabase error fetching users:")
+      console.error("Error object:", JSON.stringify(error, null, 2))
+      console.error("Error keys:", Object.keys(error))
+      console.error("Error toString:", String(error))
       // Fall back to mock data instead of throwing
       return {
         data: generateMockUsers(role),
@@ -46,7 +49,7 @@ export async function getUsers(role?: UserRole) {
     }
 
     return { data, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error fetching users:", error)
 
     // Return mock data in case of error for development purposes
@@ -124,14 +127,19 @@ export async function getUserById(id: string) {
     const { data, error } = await supabase.from("profiles").select("*").eq("id", id).single()
 
     if (error) {
-      console.error("Supabase error fetching user by ID:", error)
+      console.error("Supabase error fetching user by ID:", {
+        code: error?.code,
+        message: error?.message,
+        details: error?.details,
+        hint: error?.hint,
+      })
       throw error
     }
 
     return { data, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error fetching user:", error)
-    return { data: null, error }
+    return { data: null, error: error instanceof Error ? error : new Error(String(error)) }
   }
 }
 
@@ -162,7 +170,12 @@ export async function createUser({
     })
 
     if (authError) {
-      console.error("Supabase auth error creating user:", authError)
+      console.error("Supabase auth error creating user:", {
+        code: authError?.code,
+        message: authError?.message,
+        details: authError?.details,
+        hint: authError?.hint,
+      })
       throw authError
     }
 
@@ -197,7 +210,12 @@ export async function createUser({
         .single()
 
       if (newProfileError) {
-        console.error("Error creating profile manually:", newProfileError)
+        console.error("Error creating profile manually:", {
+          code: newProfileError?.code,
+          message: newProfileError?.message,
+          details: newProfileError?.details,
+          hint: newProfileError?.hint,
+        })
         throw newProfileError
       }
 
@@ -207,9 +225,9 @@ export async function createUser({
 
     console.log("User created successfully:", profileData)
     return { data: profileData, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error creating user:", error)
-    return { data: null, error }
+    return { data: null, error: error instanceof Error ? error : new Error(String(error)) }
   }
 }
 
@@ -222,7 +240,7 @@ export async function updateUser(
     console.log("Updating user:", id, { email, fullName, role })
 
     // Update profile
-    const updateData: Record<string, any> = {}
+    const updateData: Record<string, unknown> = {}
 
     if (fullName !== undefined) updateData.full_name = fullName
     if (role !== undefined) updateData.role = role
@@ -235,7 +253,12 @@ export async function updateUser(
       .single()
 
     if (profileError) {
-      console.error("Supabase error updating profile:", profileError)
+      console.error("Supabase error updating profile:", {
+        code: profileError?.code,
+        message: profileError?.message,
+        details: profileError?.details,
+        hint: profileError?.hint,
+      })
       throw profileError
     }
 
@@ -250,16 +273,21 @@ export async function updateUser(
       })
 
       if (emailError) {
-        console.error("Supabase error updating email:", emailError)
+        console.error("Supabase error updating email:", {
+          code: emailError?.code,
+          message: emailError?.message,
+          details: emailError?.details,
+          hint: emailError?.hint,
+        })
         throw emailError
       }
     }
 
     console.log("User updated successfully:", profileData)
     return { data: profileData, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error updating user:", error)
-    return { data: null, error }
+    return { data: null, error: error instanceof Error ? error : new Error(String(error)) }
   }
 }
 
@@ -272,16 +300,21 @@ export async function deleteUser(id: string) {
     const { error: authError } = await supabase.auth.admin.deleteUser(id)
 
     if (authError) {
-      console.error("Supabase error deleting user:", authError)
+      console.error("Supabase error deleting user:", {
+        code: authError?.code,
+        message: authError?.message,
+        details: authError?.details,
+        hint: authError?.hint,
+      })
       throw authError
     }
 
     // Profile will be automatically deleted by Supabase RLS policies and cascade delete
     console.log("User deleted successfully")
     return { success: true, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error deleting user:", error)
-    return { success: false, error }
+    return { success: false, error: error instanceof Error ? error : new Error(String(error)) }
   }
 }
 
@@ -295,15 +328,20 @@ export async function sendPasswordResetEmail(email: string) {
     })
 
     if (error) {
-      console.error("Supabase error sending password reset:", error)
+      console.error("Supabase error sending password reset:", {
+        code: error?.code,
+        message: error?.message,
+        details: error?.details,
+        hint: error?.hint,
+      })
       throw error
     }
 
     console.log("Password reset email sent successfully")
     return { success: true, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error sending password reset email:", error)
-    return { success: false, error }
+    return { success: false, error: error instanceof Error ? error : new Error(String(error)) }
   }
 }
 
@@ -313,7 +351,12 @@ export async function getCurrentUserProfile() {
     const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
 
     if (sessionError) {
-      console.error("Supabase error getting session:", sessionError)
+      console.error("Supabase error getting session:", {
+        code: sessionError?.code,
+        message: sessionError?.message,
+        details: sessionError?.details,
+        hint: sessionError?.hint,
+      })
       throw sessionError
     }
 
@@ -329,14 +372,19 @@ export async function getCurrentUserProfile() {
       .single()
 
     if (profileError) {
-      console.error("Supabase error getting profile:", profileError)
+      console.error("Supabase error getting profile:", {
+        code: profileError?.code,
+        message: profileError?.message,
+        details: profileError?.details,
+        hint: profileError?.hint,
+      })
       throw profileError
     }
 
     return { data: profileData, error: null }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error getting current user profile:", error)
-    return { data: null, error }
+    return { data: null, error: error instanceof Error ? error : new Error(String(error)) }
   }
 }
 

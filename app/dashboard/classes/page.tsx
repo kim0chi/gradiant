@@ -50,7 +50,7 @@ export default function ClassesPage() {
   const [classes, setClasses] = useState(teacherClasses)
 
   // Function to handle adding a new class
-  const handleAddClass = (newClass: any) => {
+  const handleAddClass = (newClass: unknown) => {
     // In a real app, this would be an API call
     // For now, we'll just add it to our local state
     const classWithId = {

@@ -55,7 +55,7 @@ export function getUserRole(): "teacher" | "admin" | "student" | null {
 }
 
 // Mock login function
-export function login(email: string, password: string): boolean {
+export function login(email: string, _password: string): boolean {
   // In a real app, you would validate credentials against a backend
   const user = mockUsers.find((u) => u.email === email)
 
@@ -71,14 +71,12 @@ export function login(email: string, password: string): boolean {
 export function clearUser(): void {
   if (typeof window === "undefined") return
   localStorage.removeItem(USER_KEY)
-  localStorage.removeItem("MOCK_AUTH_ENABLED")
 }
 
 // Set mock user for development
 export function setMockUser(user: User): void {
   if (typeof window === "undefined") return
   localStorage.setItem(USER_KEY, JSON.stringify(user))
-  localStorage.setItem("MOCK_AUTH_ENABLED", "true")
 }
 
 // Simple mock authentication service for demo purposes
@@ -120,22 +118,13 @@ export function setUserRole(role: "teacher" | "admin" | "student"): void {
   }
 
   localStorage.setItem(USER_KEY, JSON.stringify(user))
-  localStorage.setItem("MOCK_AUTH_ENABLED", "true")
 
   console.log(`Mock user set: ${role}`, user)
 }
 
-// Check if we're in debug mode
-export function isDebugMode() {
-  return (
-    typeof window !== "undefined" &&
-    (localStorage.getItem("MOCK_AUTH_ENABLED") === "true" || process.env.NEXT_PUBLIC_DEBUG === "true")
-  )
-}
-
 // Get the current mock user
 export function getMockUser(): MockUser | null {
-  if (!isDebugMode() || typeof window === "undefined") return null
+  if (typeof window === "undefined") return null
 
   const userJson = localStorage.getItem(USER_KEY)
   if (!userJson) return null

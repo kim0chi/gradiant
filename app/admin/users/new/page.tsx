@@ -83,10 +83,10 @@ export default function NewUserPage() {
         // Redirect to user details page
         router.push(`/admin/users/${data.id}`)
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error creating user",
-        description: error.message || "There was an error creating the user",
+        description: error instanceof Error ? error.message : "There was an error creating the user",
         variant: "destructive",
       })
     } finally {
@@ -160,7 +160,7 @@ export default function NewUserPage() {
                       <FormControl>
                         <Input placeholder="John Doe" {...field} />
                       </FormControl>
-                      <FormDescription>Enter the user's full name as it will appear in the system.</FormDescription>
+                      <FormDescription>Enter the user&apos;s full name as it will appear in the system.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}

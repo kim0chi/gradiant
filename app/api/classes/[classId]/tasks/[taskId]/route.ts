@@ -19,8 +19,8 @@ const mockTasks = [
 /**
  * GET handler for retrieving a specific task
  */
-export async function GET(request: NextRequest, { params }: { params: { classId: string; taskId: string } }) {
-  const { classId, taskId } = params
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ classId: string; taskId: string }> }) {
+  const { taskId } = await params
 
   try {
     // In a real app, fetch task from database
@@ -48,8 +48,8 @@ export async function GET(request: NextRequest, { params }: { params: { classId:
 /**
  * PATCH handler for updating a specific task
  */
-export async function PATCH(request: NextRequest, { params }: { params: { classId: string; taskId: string } }) {
-  const { classId, taskId } = params
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ classId: string; taskId: string }> }) {
+  const { taskId, classId } = await params
 
   try {
     // Parse the request body
@@ -88,8 +88,8 @@ export async function PATCH(request: NextRequest, { params }: { params: { classI
 /**
  * DELETE handler for removing a specific task
  */
-export async function DELETE(request: NextRequest, { params }: { params: { classId: string; taskId: string } }) {
-  const { classId, taskId } = params
+export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ classId: string; taskId: string }> }) {
+  const { classId: _classId, taskId: _taskId } = await params
 
   try {
     // In a real app, delete the task from the database

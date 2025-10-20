@@ -30,7 +30,7 @@ export function AdminCalendarView() {
         title: "Event added",
         description: "The event has been added to the calendar.",
       })
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to add event",
         description: "There was an error adding the event. Please try again.",
@@ -46,7 +46,7 @@ export function AdminCalendarView() {
         title: "Event updated",
         description: "The event has been updated successfully.",
       })
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to update event",
         description: "There was an error updating the event. Please try again.",
@@ -62,7 +62,7 @@ export function AdminCalendarView() {
         title: "Event deleted",
         description: "The event has been removed from the calendar.",
       })
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to delete event",
         description: "There was an error deleting the event. Please try again.",

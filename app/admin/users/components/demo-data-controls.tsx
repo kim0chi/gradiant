@@ -44,10 +44,11 @@ export function DemoDataControls() {
           variant: "destructive",
         })
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
       toast({
         title: "Error loading demo data",
-        description: error?.message || "An unknown error occurred",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {
@@ -79,10 +80,11 @@ export function DemoDataControls() {
           variant: "destructive",
         })
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
       toast({
         title: "Error clearing demo data",
-        description: error?.message || "An unknown error occurred",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {
@@ -104,7 +106,7 @@ export function DemoDataControls() {
             <DialogTitle>Load Demo Data</DialogTitle>
             <DialogDescription>
               This will create sample users for demonstration purposes. All demo users will have the password
-              "Demo123!".
+              &quot;Demo123!&quot;.
             </DialogDescription>
           </DialogHeader>
 

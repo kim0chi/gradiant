@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { PeriodSelector } from "../components/period-selector"
@@ -12,8 +12,8 @@ import { toast } from "@/components/ui/use-toast"
 
 // Import any other components you need
 
-export default function GradeSheetPage({ params }: { params: { classId: string } }) {
-  const { classId } = params
+export default function GradeSheetPage({ params }: { params: Promise<{ classId: string }> }) {
+  const { classId } = use(params)
   const [selectedPeriod, setSelectedPeriod] = useState("1") // Default to first period
   const [grades, setGrades] = useState<Record<string, Record<string, Record<string, number>>>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)

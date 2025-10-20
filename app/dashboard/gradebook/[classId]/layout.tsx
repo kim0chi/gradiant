@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React, { use } from "react"
 
 import { usePathname } from "next/navigation"
 import Link from "next/link"
@@ -14,9 +14,9 @@ import { Slot } from "@/components/ui/slot"
 // Define the props for the GradebookLayout component
 interface GradebookLayoutProps {
   children: React.ReactNode
-  params: {
+  params: Promise<{
     classId: string
-  }
+  }>
 }
 
 // Define the tab type
@@ -27,7 +27,7 @@ type Tab = {
 }
 
 export default function GradebookLayout({ children, params }: GradebookLayoutProps) {
-  const { classId } = params
+  const { classId } = use(params)
   const pathname = usePathname()
 
   // Define the tabs for the gradebook

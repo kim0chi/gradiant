@@ -247,7 +247,9 @@ export function GradingSystemsTable() {
                   </Label>
                   <Select
                     value={newSystem.type}
-                    onValueChange={(value) => setNewSystem({ ...newSystem, type: value as any })}
+                    onValueChange={(value) =>
+                      setNewSystem({ ...newSystem, type: value as "Numeric" | "Letter" | "Percentage" | "Custom" })
+                    }
                   >
                     <SelectTrigger className="col-span-3">
                       <SelectValue placeholder="Select type" />
@@ -305,7 +307,9 @@ export function GradingSystemsTable() {
                   </Label>
                   <Select
                     value={newSystem.status}
-                    onValueChange={(value) => setNewSystem({ ...newSystem, status: value as any })}
+                    onValueChange={(value) =>
+                      setNewSystem({ ...newSystem, status: value as "Active" | "Inactive" | "Draft" })
+                    }
                   >
                     <SelectTrigger className="col-span-3">
                       <SelectValue placeholder="Select status" />
@@ -467,7 +471,9 @@ export function GradingSystemsTable() {
                 </Label>
                 <Select
                   value={selectedSystem.type}
-                  onValueChange={(value) => setSelectedSystem({ ...selectedSystem, type: value as any })}
+                  onValueChange={(value) =>
+                    setSelectedSystem({ ...selectedSystem, type: value as "Numeric" | "Letter" | "Percentage" | "Custom" })
+                  }
                 >
                   <SelectTrigger className="col-span-3">
                     <SelectValue placeholder="Select type" />
@@ -525,7 +531,9 @@ export function GradingSystemsTable() {
                 </Label>
                 <Select
                   value={selectedSystem.status}
-                  onValueChange={(value) => setSelectedSystem({ ...selectedSystem, status: value as any })}
+                  onValueChange={(value) =>
+                    setSelectedSystem({ ...selectedSystem, status: value as "Active" | "Inactive" | "Draft" })
+                  }
                 >
                   <SelectTrigger className="col-span-3">
                     <SelectValue placeholder="Select status" />
@@ -574,7 +582,7 @@ export function GradingSystemsTable() {
           <DialogHeader>
             <DialogTitle>Confirm Deletion</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the "{selectedSystem?.name}" grading system? This action cannot be undone.
+              Are you sure you want to delete the &quot;{selectedSystem?.name}&quot; grading system? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4">

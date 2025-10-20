@@ -18,8 +18,8 @@ const mockCategories = [
 /**
  * GET handler for retrieving categories for a specific class
  */
-export async function GET(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId: _classId } = await params
 
   try {
     // In a real app, fetch categories from database
@@ -36,8 +36,8 @@ export async function GET(request: NextRequest, { params }: { params: { classId:
 /**
  * PATCH handler for updating categories for a specific class
  */
-export async function PATCH(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId: _classId } = await params
 
   try {
     // Parse the request body

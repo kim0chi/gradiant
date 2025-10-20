@@ -1,13 +1,13 @@
-import { createServerClient as createClient } from '@supabase/ssr';
+import { createServerClient as createSupabaseClient } from '@supabase/ssr';
 import type { Database } from '@/types/supabase';
-import { type ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
+import type { CookieOptions } from '@supabase/ssr';
 
 // Create a server-side supabase client
 export async function createServerSupabaseClient() {
   const { cookies } = await import('next/headers');
   const cookieStore = cookies();
   
-  return createClient<Database>(
+  return createSupabaseClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -15,14 +15,14 @@ export async function createServerSupabaseClient() {
         get(name: string) {
           return cookieStore.get(name)?.value;
         },
-        set(name: string, value: string, options: any) {
+        set(name: string, value: string, options: CookieOptions) {
           cookieStore.set({
             name,
             value,
             ...options,
           });
         },
-        remove(name: string, options: any) {
+        remove(name: string, options: CookieOptions) {
           cookieStore.set({
             name,
             value: '',
@@ -65,3 +65,7 @@ export async function getServerSession() {
     return null;
   }
 }
+
+// Export aliases for backwards compatibility
+export const createClient = createServerSupabaseClient;
+export const createServerClient = createServerSupabaseClient;

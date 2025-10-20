@@ -24,7 +24,7 @@ type ClassSelectorProps = {
 
 export function ClassSelector({ selectedClass, onSelectClass }: ClassSelectorProps) {
   const [open, setOpen] = useState(false)
-  const [classes, setClasses] = useState<any[]>([]) // Initialize as empty array
+  const [classes, setClasses] = useState<Array<{id: string, name: string, subject: string, period: number, room: string}>>([]) // Initialize as empty array
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

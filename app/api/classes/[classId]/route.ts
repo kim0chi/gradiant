@@ -69,8 +69,8 @@ const mockClasses = [
 /**
  * GET handler for retrieving a specific class by ID
  */
-export async function GET(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function GET(request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId } = await params
 
   // Find the class in our mock database
   const classItem = mockClasses.find((c) => c.id === classId)
@@ -85,8 +85,8 @@ export async function GET(request: NextRequest, { params }: { params: { classId:
 /**
  * PATCH handler for updating a specific class by ID
  */
-export async function PATCH(request: NextRequest, { params }: { params: { classId: string } }) {
-  const classId = params.classId
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ classId: string }> }) {
+  const { classId } = await params
 
   // Find the class in our mock database
   const classIndex = mockClasses.findIndex((c) => c.id === classId)

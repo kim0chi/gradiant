@@ -287,49 +287,53 @@ export default function StudentGradesPage() {
               <CardContent>
                 <div className="flex flex-col lg:flex-row gap-6">
                   {/* Calendar - Left Side */}
-                  <div className="flex-1">
-                    <div className="w-full max-w-md mx-auto">
+                  <div className="w-full lg:basis-[45%] lg:max-w-none">
+                    <div className="max-w-md w-full">
                       <h3 className="text-lg font-medium mb-4">{format(new Date(), "MMMM yyyy")}</h3>
-                      <Calendar
-                        mode="single"
-                        selected={selectedDate}
-                        onSelect={setSelectedDate}
-                        className="rounded-md border shadow-sm"
-                        modifiers={{
-                          present: (date) => {
-                            const dateKey = date.toISOString().split('T')[0];
-                            return calendarAttendance[dateKey]?.status === 'present';
-                          },
-                          absent: (date) => {
-                            const dateKey = date.toISOString().split('T')[0];
-                            return calendarAttendance[dateKey]?.status === 'absent';
-                          },
-                          tardy: (date) => {
-                            const dateKey = date.toISOString().split('T')[0];
-                            return calendarAttendance[dateKey]?.status === 'tardy';
-                          },
-                          excused: (date) => {
-                            const dateKey = date.toISOString().split('T')[0];
-                            return calendarAttendance[dateKey]?.status === 'excused';
-                          },
-                          weekend: (date) => {
-                            const dateKey = date.toISOString().split('T')[0];
-                            return calendarAttendance[dateKey]?.status === 'weekend';
-                          }
-                        }}
-                        modifiersClassNames={{
-                          present: "bg-green-100 text-green-800",
-                          absent: "bg-red-100 text-red-800",
-                          tardy: "bg-amber-100 text-amber-800",
-                          excused: "bg-blue-100 text-blue-800",
-                          weekend: "bg-gray-100 text-gray-400"
-                        }}
-                      />
+                      {/* Calendar wrapper with strict grid reset */}
+                      <div className="[&_table]:table-fixed [&_table]:w-full [&_thead_tr]:grid [&_thead_tr]:grid-cols-7 [&_tbody_tr]:grid [&_tbody_tr]:grid-cols-7 [&_th]:tracking-normal [&_th]:leading-none [&_td]:tracking-normal [&_td]:leading-none [&_th]:text-center [&_td]:text-center [&_th]:transform-none [&_td]:transform-none">
+                        <Calendar
+                          mode="single"
+                          selected={selectedDate}
+                          onSelect={setSelectedDate}
+                          weekStartsOn={0}
+                          className="rounded-md border shadow-sm bg-white p-3"
+                          modifiers={{
+                            present: (date) => {
+                              const dateKey = date.toISOString().split('T')[0];
+                              return calendarAttendance[dateKey]?.status === 'present';
+                            },
+                            absent: (date) => {
+                              const dateKey = date.toISOString().split('T')[0];
+                              return calendarAttendance[dateKey]?.status === 'absent';
+                            },
+                            tardy: (date) => {
+                              const dateKey = date.toISOString().split('T')[0];
+                              return calendarAttendance[dateKey]?.status === 'tardy';
+                            },
+                            excused: (date) => {
+                              const dateKey = date.toISOString().split('T')[0];
+                              return calendarAttendance[dateKey]?.status === 'excused';
+                            },
+                            weekend: (date) => {
+                              const dateKey = date.toISOString().split('T')[0];
+                              return calendarAttendance[dateKey]?.status === 'weekend';
+                            }
+                          }}
+                          modifiersClassNames={{
+                            present: "bg-green-100 text-green-800",
+                            absent: "bg-red-100 text-red-800",
+                            tardy: "bg-amber-100 text-amber-800",
+                            excused: "bg-blue-100 text-blue-800",
+                            weekend: "bg-gray-100 text-gray-400"
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                  
+
                   {/* Selected Day Details - Right Side */}
-                  <div className="flex-1">
+                  <div className="w-full lg:basis-[55%] lg:flex-grow">
                     {selectedDate && (
                       <div className="bg-white p-6 rounded-lg border shadow-sm">
                         <h3 className="text-xl font-medium mb-4 border-b pb-2">

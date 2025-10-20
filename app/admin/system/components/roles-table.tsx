@@ -51,11 +51,18 @@ const initialRoles = [
   },
 ]
 
+type Role = {
+  id: number
+  name: string
+  description: string
+  userCount: number
+}
+
 export function RolesTable() {
   const [roles, setRoles] = useState(initialRoles)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-  const [currentRole, setCurrentRole] = useState<any>(null)
+  const [currentRole, setCurrentRole] = useState<Role | null>(null)
   const [newRole, setNewRole] = useState({ name: "", description: "" })
 
   const handleAddRole = () => {

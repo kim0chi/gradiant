@@ -42,7 +42,7 @@ export default function UserList({ initialRole }: UserListProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const [currentRole, setCurrentRole] = useState<UserRole | undefined>(initialRole)
+  const [currentRole] = useState<UserRole | undefined>(initialRole)
   const [error, setError] = useState<string | null>(null)
   const [isCreatingTestUser, setIsCreatingTestUser] = useState(false)
 
@@ -60,12 +60,13 @@ export default function UserList({ initialRole }: UserListProps) {
         throw error
       }
       setUsers(data || [])
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Unknown error"
       console.error("Error loading users:", error)
-      setError(`Failed to load users: ${error.message || "Unknown error"}`)
+      setError(`Failed to load users: ${errorMessage}`)
       toast({
         title: "Error loading users",
-        description: error.message || "An unknown error occurred",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {
@@ -89,11 +90,12 @@ export default function UserList({ initialRole }: UserListProps) {
           description: `User ${selectedUser.email} has been deleted successfully`,
         })
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
       console.error("Error deleting user:", error)
       toast({
         title: "Error deleting user",
-        description: error.message || "An unknown error occurred",
+        description: errorMessage,
         variant: "destructive",
       })
     }
@@ -110,11 +112,12 @@ export default function UserList({ initialRole }: UserListProps) {
           description: `Password reset email sent to ${user.email}`,
         })
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
       console.error("Error sending password reset:", error)
       toast({
         title: "Error sending password reset",
-        description: error.message || "An unknown error occurred",
+        description: errorMessage,
         variant: "destructive",
       })
     }
@@ -133,11 +136,12 @@ export default function UserList({ initialRole }: UserListProps) {
           description: `Test user created with email: ${data.email}`,
         })
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
       console.error("Error creating test user:", error)
       toast({
         title: "Error creating test user",
-        description: error.message || "An unknown error occurred",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {

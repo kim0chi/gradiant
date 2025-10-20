@@ -62,7 +62,7 @@ export default function NewClassPage() {
 
     try {
       // In a real application, this would be an API call
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("classes")
         .insert({
           name: values.name,

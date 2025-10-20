@@ -40,7 +40,10 @@ export function useCalendarEvents() {
         // Initialize with all event types selected
         setSelectedEventTypes([...allEventTypes])
       } catch (err) {
-        console.error("Error fetching calendar events:", err)
+        console.error("Error fetching calendar events:")
+        console.error("Error object:", JSON.stringify(err, null, 2))
+        console.error("Error keys:", err && typeof err === 'object' ? Object.keys(err) : 'N/A')
+        console.error("Error toString:", String(err))
         setError("Failed to load calendar events")
 
         // Fallback to mock data
@@ -70,7 +73,10 @@ export function useCalendarEvents() {
       setEvents((prev) => [...prev, newEvent])
       return newEvent
     } catch (err) {
-      console.error("Error adding event:", err)
+      console.error("Error adding event:")
+      console.error("Error object:", JSON.stringify(err, null, 2))
+      console.error("Error keys:", err && typeof err === 'object' ? Object.keys(err) : 'N/A')
+      console.error("Error toString:", String(err))
       throw err
     }
   }
@@ -86,7 +92,10 @@ export function useCalendarEvents() {
       setEvents((prev) => prev.map((e) => (e.id === event.id ? event : e)))
       return event
     } catch (err) {
-      console.error("Error updating event:", err)
+      console.error("Error updating event:")
+      console.error("Error object:", JSON.stringify(err, null, 2))
+      console.error("Error keys:", err && typeof err === 'object' ? Object.keys(err) : 'N/A')
+      console.error("Error toString:", String(err))
       throw err
     }
   }
@@ -101,7 +110,10 @@ export function useCalendarEvents() {
 
       setEvents((prev) => prev.filter((e) => e.id !== eventId))
     } catch (err) {
-      console.error("Error deleting event:", err)
+      console.error("Error deleting event:")
+      console.error("Error object:", JSON.stringify(err, null, 2))
+      console.error("Error keys:", err && typeof err === 'object' ? Object.keys(err) : 'N/A')
+      console.error("Error toString:", String(err))
       throw err
     }
   }

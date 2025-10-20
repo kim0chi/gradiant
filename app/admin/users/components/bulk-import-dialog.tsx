@@ -18,8 +18,16 @@ import { Upload, AlertCircle, CheckCircle2 } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Progress } from "@/components/ui/progress"
 
+type User = {
+  id: string
+  email: string
+  full_name: string
+  role: string
+  created_at: string
+}
+
 type BulkImportDialogProps = {
-  onSuccess: (newUsers: any[]) => void
+  onSuccess: (newUsers: User[]) => void
 }
 
 export function BulkImportDialog({ onSuccess }: BulkImportDialogProps) {
@@ -151,8 +159,9 @@ export function BulkImportDialog({ onSuccess }: BulkImportDialogProps) {
               created_at: new Date().toISOString(),
             })
           }
-        } catch (error: any) {
-          errors.push(`User ${users[i].email}: ${error.message}`)
+        } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : String(error)
+          errors.push(`User ${users[i].email}: ${errorMessage}`)
         }
 
         // Update progress
@@ -181,17 +190,18 @@ export function BulkImportDialog({ onSuccess }: BulkImportDialogProps) {
           variant: "destructive",
         })
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "There was an error importing users"
       toast({
         title: "Import failed",
-        description: error.message || "There was an error importing users",
+        description: errorMessage,
         variant: "destructive",
       })
 
       setImportResults({
         success: 0,
         failed: 0,
-        errors: [error.message],
+        errors: [errorMessage],
       })
     } finally {
       setIsImporting(false)

@@ -53,13 +53,13 @@ type StudentGrade = {
   weaknesses: string[]
 }
 
-type Period = {
+type _Period = {
   id: string
   name: string
   weight: number
 }
 
-type Category = {
+type _Category = {
   id: string
   name: string
   weight: number

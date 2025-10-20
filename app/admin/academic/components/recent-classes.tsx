@@ -37,14 +37,14 @@ export function RecentClasses() {
 
         // Transform the data
         const transformedData: ClassItem[] =
-          data?.map((item: any) => ({
-            id: item.id,
-            name: item.name,
-            section: item.section || "Section A",
-            teacher: item.teacher_name || "Unassigned",
-            students: item.student_count || Math.floor(Math.random() * 30) + 10,
-            status: item.status || "active",
-            updatedAt: item.updated_at || new Date().toISOString(),
+          data?.map((item: Record<string, unknown>) => ({
+            id: item.id as string,
+            name: item.name as string,
+            section: (item.section as string) || "Section A",
+            teacher: (item.teacher_name as string) || "Unassigned",
+            students: (item.student_count as number) || Math.floor(Math.random() * 30) + 10,
+            status: (item.status as ClassItem["status"]) || "active",
+            updatedAt: (item.updated_at as string) || new Date().toISOString(),
           })) || generateMockClasses()
 
         setClasses(transformedData)

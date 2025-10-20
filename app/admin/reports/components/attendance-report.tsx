@@ -329,7 +329,7 @@ export function AttendanceReport() {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value, name, props) => [`${value} students (${props.payload.percentage}%)`, name]}
+                    formatter={(value, _, props) => [`${value} students (${props.payload.percentage}%)`, props.payload.name]}
                   />
                   <Legend />
                 </PieChart>

@@ -33,7 +33,6 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 
 export default function AdminPerformanceAnalyticsPage() {
   const [loading, setLoading] = useState(true)
-  const [userData, setUserData] = useState<any>(null)
   const [selectedGradeLevel, setSelectedGradeLevel] = useState<string>("all")
   const [selectedSubject, setSelectedSubject] = useState<string>("all")
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>("term")
@@ -54,8 +53,6 @@ export default function AdminPerformanceAnalyticsPage() {
           router.push("/dashboard")
           return
         }
-
-        setUserData(user)
       } catch (error) {
         console.error("Error fetching user data:", error)
       } finally {

@@ -63,9 +63,6 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      // Enable mock auth mode
-      localStorage.setItem("MOCK_AUTH_ENABLED", "true")
-
       // Set the user role
       setUserRole(role)
 
